@@ -46,10 +46,10 @@ enyo.kind({
 		{kind: enyo.HFlexBox, className: "menu-container", align: "center", components: [
 			{kind: "ToolButton", name: "back", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-back.png", onclick: "doBack"},
 			{kind: "ToolButton", name: "forward", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-forward.png", onclick: "doForward"},
-			{kind: "ToolButton", name: "search", className: "actionbar-tool-button", flex: 1, kind: "URLSearch", onLoad: "doLoad", onStopLoad: "doStopLoad", onRefresh: "doRefresh"},
+			{kind: "ToolButton", name: "search", className: "actionbar-tool-button", flex: 1, kind: "URLSearch", onLoad: "doLoad", onStopLoad: "doStopLoad", onRefresh: "doRefresh", onAddressInputFocused: "hideButtons", onAddressInputBlurred: "showButtons"},
 			{kind: "ToolButton", name: "share", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-share.png", onclick: "showSharePopup"},
-			{kind: "ToolButton", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-newcard.png", onclick: "doNewCard"},
-			{kind: "ToolButton", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-bookmark.png", onclick: "doOpenBookmarks"},
+			{kind: "ToolButton", name: "newcard", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-newcard.png", onclick: "doNewCard"},
+			{kind: "ToolButton", name: "bookmarks", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-bookmark.png", onclick: "doOpenBookmarks"},
 		]},	
 		{name: "sharePopup", className: "launch-popup",  kind: "Menu", components: [
 			{caption: $L("Add Bookmark"), onclick: "doAddBookmark"},
@@ -59,6 +59,22 @@ enyo.kind({
 		{name: "progressBar", kind: "ProgressBar", className: "url-progress invisible", animatePosition: false},
 	],
 	//* @public
+	hideButtons: function() {
+		if ( enyo.getWindowOrientation() == "up" || enyo.getWindowOrientation() == "down") {
+			this.$.back.hide();
+			this.$.forward.hide();
+			this.$.share.hide();
+			this.$.newcard.hide();
+			//this.$.bookmarks.hide();
+		}
+	},
+	showButtons: function() {
+		this.$.back.show();
+		this.$.forward.show();
+		this.$.share.show();
+		this.$.newcard.show();
+		//this.$.bookmarks.show();
+	},	
 	resize: function() {
 		this.$.search.resize();
 	},

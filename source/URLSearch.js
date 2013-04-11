@@ -26,7 +26,9 @@ enyo.kind({
 	events: {
 		onLoad: "",
 		onStopLoad: "",
-		onRefresh: ""
+		onRefresh: "",
+		onAddressInputFocused: "",
+		onAddressInputBlurred: ""
 	},
 	components: [
 		{name: "bookmarksService", kind: "DbService", method: "search", dbKind: "com.palm.browserbookmarks:1", onSuccess: "gotBookmarksData", onFailure: "finishShowSearchResults"},
@@ -35,7 +37,9 @@ enyo.kind({
 			onInputChange: "startSearch",
 			onGo: "go",
 			onStop: "doStopLoad",
-			onRefresh: "doRefresh"
+			onRefresh: "doRefresh",
+			onAddressInputFocused: "doAddressInputFocused",
+			onAddressInputBlurred: "doAddressInputBlurred"
 		},
 		{name: "searchPopup", kind: "Menu", lazy: false, modal: false, className: "addressbar-popup", components: [
 			{name: "providersList", className: "addressbar-providerslist", kind: "VirtualRepeater", onSetupRow: "providersListGetItem", components: [

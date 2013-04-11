@@ -23,6 +23,8 @@ enyo.kind({
 	events: {
 		onBlur: "",
 		onInputChange: "",
+		onAddressInputFocused: "",
+		onAddressInputBlurred: "",
 		onGo: "",
 		onStop: "",
 		onRefresh: ""
@@ -48,6 +50,7 @@ enyo.kind({
 	_rightButton: "clearButton",
 	selectInput: function() {
 		this.changeButtons();
+		this.doAddressInputFocused();
 	},
 	deselectInput: function() {
 		if (this.$.userinput.getValue() === "") {
@@ -55,6 +58,7 @@ enyo.kind({
 		}
 		this.changeButtons();
 		this.doBlur();
+		this.doAddressInputBlurred();
 	},
 	inputChange: function(inSender, inEvent, inValue) {
 		this.changeButtons();
