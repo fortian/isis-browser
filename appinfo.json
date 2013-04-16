@@ -10,6 +10,11 @@
 	"splashicon": "icon-256x256.png",
 	"uiRevision": 2,
 	"tapToShareSupported":true,
+	"mimeTypes": [
+{ "urlPattern": "^https?:" },
+{ "mime": "text/html", "extension": "html" },
+{ "mime": "text/html", "extension": "htm" }
+],
 	"universalSearch": {
 		"dbsearch": {
 			"displayName":"Bookmarks & History",
