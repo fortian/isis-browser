@@ -1,11 +1,11 @@
 {
 	"id": "com.junoavalon.app.isisbrowser",
-	"version": "2.5.0",
+	"version": "3.0.0",
 	"vendor": "Juno Avalon",
 	"type": "web",
 	"main": "index.html",
 	"title": "Isis Web",
-	"keywords" : [ "web", "Browser", "Blazer", "Internet", "Juno", "Avalon", "Isis", "Osiris", "shindig" ],
+	"keywords" : [ "web", "Browser", "Blazer", "Internet", "Juno", "Avalon", "Isis", "Osiris", "shindig", "explorer" ],
 	"icon": "icon.png",
 	"splashicon": "icon-256x256.png",
 	"uiRevision": 2,
