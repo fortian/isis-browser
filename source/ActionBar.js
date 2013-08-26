@@ -50,6 +50,7 @@ enyo.kind({
 			{kind: "ToolButton", name: "share", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-share.png", onclick: "showSharePopup"},
 			{kind: "ToolButton", name: "newcard", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-newcard.png", onclick: "doNewCard"},
 			{kind: "ToolButton", name: "bookmarks", className: "actionbar-tool-button", icon: "images/chrome/menu-icon-bookmark.png", onclick: "doOpenBookmarks"},
+			{kind: "Image", className: "actionbar-tool-button", src: "../../sysmgr/images/keyboard-tablet/icon-hide-keyboard.png", onclick: "changeKB"},
 		]},	
 		{name: "sharePopup", className: "launch-popup",  kind: "Menu", components: [
 			{caption: $L("Add Bookmark"), onclick: "doAddBookmark"},
@@ -134,6 +135,15 @@ enyo.kind({
 			if (!this.$.progressBar.hasClass("invisible")) {
 				this.$.progressBar.addClass("invisible"); 
 			}
+		}
+	},
+	changeKB: function(){
+		if (enyo.keyboard.isShowing()){
+			enyo.keyboard.forceHide();
+			enyo.keyboard.setManualMode(false);
+		}
+		else{
+		enyo.keyboard.forceShow(0);
 		}
 	},
 });
