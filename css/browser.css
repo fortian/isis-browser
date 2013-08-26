@@ -12,6 +12,31 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
+/* Extended Back Button */
+
+.history-popup {
+	min-width: 50px;
+	-webkit-box-sizing: border-box;
+	border-width: 0px;
+	-webkit-border-image: url(../images/popup.png) 0 0 0 0 stretch stretch;
+	/* end enyo-popup overrides */
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid #222;
+	background: rgba(50,50,50,1);
+}
+
+.history-row {
+	font-size: 16px;
+	color: #fff;
+	padding: 10px;
+	border-top: 1px solid #444;
+	max-width: 450px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 /* Start Page */
 
 .startpage-list .enyo-datalist-client {

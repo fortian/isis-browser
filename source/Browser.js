@@ -50,7 +50,8 @@ enyo.kind({
 			onAddToLauncher: "doAddToLauncher",
 			onShareLink: "doShareLink",
 			onOpenBookmarks: "doOpenBookmarks",
-			onNewCard: "openNewCard"
+			onNewCard: "openNewCard",
+			onHistorySelected: "setHistoryUrl"
 		},
 		{name: "findDialog", kind: "FindBar", showing: false, onFind: "find", onGoToPrevious: "goToPrevious", onGoToNext: "goToNext"},
 		{name: "view", kind: "WebView", flex: 1, height: "100%",
@@ -106,6 +107,8 @@ enyo.kind({
 		]},
         {name: "sslCertDialog", kind: "CertificateDialog", onCertLoad: "enableViewSSLCertificate", onClose: "closeSSLCertificate"}
     ],
+        changedUrl: false,
+	    isQuickRedirect: false,
 	WebKitErrors: {
 		ERR_SYS_FILE_DOESNT_EXIST: 14,
 		ERR_WK_FLOADER_CANCELLED: 1000,
@@ -190,6 +193,12 @@ enyo.kind({
 			}
 		}
 	},
+		setHistoryUrl: function() {
+		var newUrl = this.$.actionbar.getHistoryUrl();
+		enyo.log("setHistoryUrl newUrl = " + newUrl);
+		this.url = newUrl;
+		this.urlChanged();
+ 	},
 	urlChanged: function() {
 		this.log(this.url);
 		this.$.view.setUrl(this.url);
@@ -210,7 +219,7 @@ enyo.kind({
 			this.$.actionbar.setUrl(this.url);
 			this.$.actionbar.setTitle(this.title);
 		}
-		this.gotHistoryState(inBack, inForward);
+		this.changedUrl = true;
 		this.doPageTitleChanged(this.title, this.url);
 	},
 	gotHistoryState: function(inBack, inForward) {
@@ -421,13 +430,13 @@ enyo.kind({
 	},
 	goBack: function() {
 		if (this.canGoBack) {
-			this.$.view.callBrowserAdapter("goBack");
+			this.$.actionbar.goBack(0);
 		} else {
 			this.doClose();
 		}
 	},
 	goForward: function() {
-		this.$.view.callBrowserAdapter("goForward");
+		this.$.actionbar.goForward(0);
 	},
 	reloadClick: function() {
 	if(this.isErrorLoadFailed === true) {
@@ -460,6 +469,14 @@ enyo.kind({
 			if (inProgress === 100) {
 				this._timeoutHandle = setTimeout(enyo.hitch(this, "clearProgress"), 1000);
 			}
+			if (this.changedUrl && inProgress > 10) {
+				if (!this.isQuickRedirect && this.url !== this.$.actionbar.getCurrentPage().url) {
+					this.$.actionbar.setCurrentPage({title: this.title, url: this.url});
+				}
+				if (this.isQuickRedirect) this.isQuickRedirect = false;
+				this.changedUrl = false;
+				this.gotHistoryState(this.$.actionbar.getCanGoBack(), this.$.actionbar.getCanGoForward());
+			}
 		}
 	},
 	loadStopped: function() {
@@ -467,6 +484,7 @@ enyo.kind({
 	},
 	loadCompleted: function() {
 		// empty
+		if (this._lastProgress <= 50) this.isQuickRedirect = true;
 	},
 	clearProgress: function() {
 		this.$.actionbar.setProgress(0);
