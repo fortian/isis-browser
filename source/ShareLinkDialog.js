@@ -33,12 +33,12 @@ enyo.kind({
         title: "Sparrow",
         image: "images/icons/sparrow-32x32.png",
         type: "sparrow",
-        checkExistance: true
+        exists: true
     },{
         title: "Facebook",
         image: "images/icons/facebook-32x32.png",
         type: "facebook",
-        checkExistance: true
+        exists: true
     }],
     components: [{
 		name: "appCatalogService",
