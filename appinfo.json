@@ -1,6 +1,6 @@
 {
 	"id": "com.junoavalon.app.isisbrowser",
-	"version": "3.0.0",
+	"version": "3.5.0",
 	"vendor": "Juno Avalon",
 	"type": "web",
 	"main": "index.html",
