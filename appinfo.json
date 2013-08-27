@@ -13,7 +13,8 @@
 	"mimeTypes": [
 { "urlPattern": "^https?:" },
 { "mime": "text/html", "extension": "html" },
-{ "mime": "text/html", "extension": "htm" }
+{ "mime": "text/html", "extension": "htm" },
+{ "mime": "application/xhtml+xml", "extension": "xml"}
 ],
 	"universalSearch": {
 		"dbsearch": {
