@@ -41,7 +41,7 @@ enyo.kind({
         exists: true
     }],
     components: [{
-		name: "appCatalogService",
+        name: "appCatalogService",
         kind: enyo.PalmService,
         service: "palm://com.palm.applicationManager",
         method: "launch",
@@ -55,7 +55,7 @@ enyo.kind({
         onFailure: "listApplicationsError",
         method: "listApps"
     }, {
-		name: "launchApplicationService",
+        name: "launchApplicationService",
         kind: enyo.PalmService,
         service: enyo.palmServices.application,
         method: "open"
@@ -167,13 +167,13 @@ enyo.kind({
         this.close();
     },
     shareLinkViaEmail: function () {
-	    var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
-		msg = enyo.macroize(msg, {src: this.url, title: this.title || this.url});
-		var params = {
-			summary: $L("Check out this web page..."),
-			text: msg
-		};
-		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
+        var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
+        msg = enyo.macroize(msg, {src: this.url, title: this.title || this.url});
+        var params = {
+            summary: $L("Check out this web page..."),
+            text: msg
+        };
+        this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
     },
     shareLinkViaMessaging: function () {
         var params = {
