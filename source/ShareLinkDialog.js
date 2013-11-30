@@ -20,7 +20,7 @@ enyo.kind({
         onShareClicked: ""
     },
     SHARE_LINK_LIST: [{
-        title: $L("Email"), 
+        title: $L("E-mail"), 
         image: "images/icons/email-32x32.png", 
         type: "email",
         exists: true
@@ -38,6 +38,11 @@ enyo.kind({
         title: "Facebook",
         image: "images/icons/facebook-32x32.png",
         type: "facebook",
+        exists: true
+    },{
+        title: "Project Macaw"
+        image: "images/icons/sparrow-32x32.png"
+        type: "macaw"
         exists: true
     }],
     components: [{
@@ -163,6 +168,8 @@ enyo.kind({
             this.shareLinkViaFacebook();
           } else if (shareServiceType === "sparrow") {
           this.shareLinkViaSparrow();
+          } else if (shareServiceType === "macaw") {
+              this.shareLinkViaMacaw();
           }
         this.close();
     },
@@ -196,6 +203,15 @@ enyo.kind({
             statusText: $L("Check out this web page: ") + this.url
         };
         this.$.launchApplicationService.call({id: "com.palm.app.enyo-facebook", params: params});
+    },
+    shareLinkViaMacaw: function () {
+        var params = {
+            launchParam: {
+                action: 'tweet',
+                msg: $L("Check out this web page: ") + this.url
+            }
+        };
+        this.$.launchApplicationService.call({id: "net.minego.phnx", params: params});
     },
     downloadFacebookApp: function () {
         this.log("Launching app catalog to download facebook");
@@ -254,6 +270,32 @@ enyo.kind({
         if (!foundSparrow) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Sparrow") {
+                    shareService.exists = false;
+                    shareService.checkExistance = false;
+                    this.$.shareList.renderRow(index);
+                }
+            }, this);
+        }
+        
+        
+        foundMacaw = apps.some(function (app) {
+            this.log(enyo.json.stringify(app));
+            if (app.id === "net.minego.phnx") {
+
+                this.SHARE_LINK_LIST.some(function (shareService, index) {
+                    if (shareService.title === "Project Macaw") {
+                        shareService.exists = true;
+                        shareService.checkExistance = false;
+                        this.$.shareList.renderRow(index);
+                    }
+                }, this);
+                return true;
+            }
+        }, this);
+
+        if (!foundMacaw) {
+            this.SHARE_LINK_LIST.some(function (shareService, index) {
+                if (shareService.title === "Project Macaw") {
                     shareService.exists = false;
                     shareService.checkExistance = false;
                     this.$.shareList.renderRow(index);
