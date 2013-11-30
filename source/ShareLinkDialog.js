@@ -20,7 +20,7 @@ enyo.kind({
         onShareClicked: ""
     },
     SHARE_LINK_LIST: [{
-        title: $L("E-mail"), 
+        title: $L("Email"), 
         image: "images/icons/email-32x32.png", 
         type: "email",
         exists: true
@@ -40,9 +40,9 @@ enyo.kind({
         type: "facebook",
         exists: true
     },{
-        title: "Project Macaw"
-        image: "images/icons/sparrow-32x32.png"
-        type: "macaw"
+        title: "Macaw",
+        image: "images/icons/sparrow-32x32.png",
+        type: "macaw",
         exists: true
     }],
     components: [{
@@ -206,10 +206,8 @@ enyo.kind({
     },
     shareLinkViaMacaw: function () {
         var params = {
-            launchParam: {
-                action: 'tweet',
+                action: "tweet",
                 msg: $L("Check out this web page: ") + this.url
-            }
         };
         this.$.launchApplicationService.call({id: "net.minego.phnx", params: params});
     },
