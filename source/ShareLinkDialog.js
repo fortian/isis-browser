@@ -12,6 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
+
 enyo.kind({
     name: "ShareLinkDialog",
     kind: "AcceptCancelPopup",
@@ -41,14 +42,9 @@ enyo.kind({
         exists: true
     },{
         title: "Macaw",
-        image: "images/icons/macaw-32x32.png",
+        image: "images/icons/sparrow-32x32.png",
         type: "macaw",
         exists: true
-    },{
-        title: "neato!",
-        image: "images/icons/sparrow-32x32.png",
-        type: "neato"
-        exists: true        
     }],
     components: [{
         name: "appCatalogService",
@@ -134,7 +130,9 @@ enyo.kind({
                 this.$.shareMessage.setContent("Share link via");
             }
 
+
             this.$.downloadButton.show();
+
 
             var itemDefinition = this.SHARE_LINK_LIST[inIndex];
             this.$.icon.setSrc(itemDefinition.image);
@@ -156,6 +154,7 @@ enyo.kind({
         var shareService = this.SHARE_LINK_LIST[inEvent.rowIndex];
         var shareServiceType = shareService.type;
 
+
         if (!shareService.exists) {
             if (shareServiceType === "facebook") {
                 this.downloadFacebookApp();
@@ -175,8 +174,6 @@ enyo.kind({
           this.shareLinkViaSparrow();
           } else if (shareServiceType === "macaw") {
               this.shareLinkViaMacaw();
-          } else if (shareServiceType === "neato") {
-            this.shareLinkViaNeato();
           }
         this.close();
     },
@@ -218,12 +215,6 @@ enyo.kind({
         };
         this.$.launchApplicationService.call({id: "net.minego.phnx", params: params});
     },
-    shareLinkViaNeato: function () {
-        var params = {
-            send: '{"a":"url","c":"'+this.url+'"}'
-        };
-        this.$.launchApplicationService.call({id: "com.zhephree.neato", params: params});
-    },
     downloadFacebookApp: function () {
         this.log("Launching app catalog to download facebook");
         this.$.appCatalogService.call({id: "com.palm.app.enyo-findapps", params: {
@@ -242,6 +233,7 @@ enyo.kind({
             this.log(enyo.json.stringify(app));
             if (app.id === "com.palm.app.enyo-facebook") {
 
+
                 this.SHARE_LINK_LIST.some(function (shareService, index) {
                     if (shareService.title === "Facebook") {
                         shareService.exists = true;
@@ -253,6 +245,7 @@ enyo.kind({
             }
         }, this);
 
+
         if (!foundFacebook) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Facebook") {
@@ -263,9 +256,11 @@ enyo.kind({
             }, this);
         }
 
+
         foundSparrow = apps.some(function (app) {
             this.log(enyo.json.stringify(app));
             if (app.id === "com.appstuh.sparrow") {
+
 
                 this.SHARE_LINK_LIST.some(function (shareService, index) {
                     if (shareService.title === "Sparrow") {
@@ -278,6 +273,7 @@ enyo.kind({
             }
         }, this);
 
+
         if (!foundSparrow) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Sparrow") {
@@ -288,9 +284,11 @@ enyo.kind({
             }, this);
         }
         
+        
         foundMacaw = apps.some(function (app) {
             this.log(enyo.json.stringify(app));
             if (app.id === "net.minego.phnx") {
+
 
                 this.SHARE_LINK_LIST.some(function (shareService, index) {
                     if (shareService.title === "Project Macaw") {
@@ -303,34 +301,10 @@ enyo.kind({
             }
         }, this);
 
+
         if (!foundMacaw) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Project Macaw") {
-                    shareService.exists = false;
-                    shareService.checkExistance = false;
-                    this.$.shareList.renderRow(index);
-                }
-            }, this);
-        }
-
-        foundNeato = apps.some(function (app) {
-            this.log(enyo.json.stringify(app));
-            if (app.id === "com.zhephree.neato") {
-
-                this.SHARE_LINK_LIST.some(function (shareService, index) {
-                    if (shareService.title === "neato!") {
-                        shareService.exists = true;
-                        shareService.checkExistance = false;
-                        this.$.shareList.renderRow(index);
-                    }
-                }, this);
-                return true;
-            }
-        }, this);
-
-        if (!foundMacaw) {
-            this.SHARE_LINK_LIST.some(function (shareService, index) {
-                if (shareService.title === "neato!") {
                     shareService.exists = false;
                     shareService.checkExistance = false;
                     this.$.shareList.renderRow(index);
@@ -342,3 +316,4 @@ enyo.kind({
         this.close();
     } 
 });
+
