@@ -41,7 +41,7 @@ enyo.kind({
         exists: true
     },{
         title: "Macaw",
-        image: "images/icons/sparrow-32x32.png",
+        image: "images/icons/macaw-32x32.png",
         type: "macaw",
         exists: true
     }],
