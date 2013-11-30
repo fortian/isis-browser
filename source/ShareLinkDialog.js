@@ -44,6 +44,11 @@ enyo.kind({
         image: "images/icons/macaw-32x32.png",
         type: "macaw",
         exists: true
+    },{
+        title: "neato!",
+        image: "images/icons/sparrow-32x32.png",
+        type: "neato"
+        exists: true        
     }],
     components: [{
         name: "appCatalogService",
@@ -170,6 +175,8 @@ enyo.kind({
           this.shareLinkViaSparrow();
           } else if (shareServiceType === "macaw") {
               this.shareLinkViaMacaw();
+          } else if (shareServiceType === "neato") {
+            this.shareLinkViaNeato();
           }
         this.close();
     },
@@ -210,6 +217,12 @@ enyo.kind({
                 msg: $L("Check out this web page: ") + this.url
         };
         this.$.launchApplicationService.call({id: "net.minego.phnx", params: params});
+    },
+    shareLinkViaNeato: function () {
+        var params = {
+            send: '{"a":"url","c":"'+this.url+'"}'
+        };
+        this.$.launchApplicationService.call({id: "com.zhephree.neato", params: params});
     },
     downloadFacebookApp: function () {
         this.log("Launching app catalog to download facebook");
@@ -275,7 +288,6 @@ enyo.kind({
             }, this);
         }
         
-        
         foundMacaw = apps.some(function (app) {
             this.log(enyo.json.stringify(app));
             if (app.id === "net.minego.phnx") {
@@ -294,6 +306,31 @@ enyo.kind({
         if (!foundMacaw) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Project Macaw") {
+                    shareService.exists = false;
+                    shareService.checkExistance = false;
+                    this.$.shareList.renderRow(index);
+                }
+            }, this);
+        }
+
+        foundNeato = apps.some(function (app) {
+            this.log(enyo.json.stringify(app));
+            if (app.id === "com.zhephree.neato") {
+
+                this.SHARE_LINK_LIST.some(function (shareService, index) {
+                    if (shareService.title === "neato!") {
+                        shareService.exists = true;
+                        shareService.checkExistance = false;
+                        this.$.shareList.renderRow(index);
+                    }
+                }, this);
+                return true;
+            }
+        }, this);
+
+        if (!foundMacaw) {
+            this.SHARE_LINK_LIST.some(function (shareService, index) {
+                if (shareService.title === "neato!") {
                     shareService.exists = false;
                     shareService.checkExistance = false;
                     this.$.shareList.renderRow(index);
