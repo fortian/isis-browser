@@ -41,9 +41,14 @@ enyo.kind({
         type: "facebook",
         exists: true
     },{
-        title: "Macaw",
-        image: "images/icons/sparrow-32x32.png",
+        title: "Project Macaw",
+        image: "images/icons/macaw-32x32.png",
         type: "macaw",
+        exists: true
+    },{
+        title: "Quick Post",
+        image: "images/icons/quickpost-32x32.png",
+        type: "quickpost",
         exists: true
     }],
     components: [{
@@ -174,6 +179,8 @@ enyo.kind({
           this.shareLinkViaSparrow();
           } else if (shareServiceType === "macaw") {
               this.shareLinkViaMacaw();
+            } else if (shareServiceType === "quickpost") {
+                this.shareLinkViaQuickpost();
           }
         this.close();
     },
@@ -214,6 +221,12 @@ enyo.kind({
                 msg: $L("Check out this web page: ") + this.url
         };
         this.$.launchApplicationService.call({id: "net.minego.phnx", params: params});
+    },
+    shareLinkViaQuickpost: function () {
+        var params = {
+            quickPost: $L("Check out this web page: ") + this.url
+        }
+        this.$.launchApplicationService.call({id: "com.hedami.quickpost", params: params});
     },
     downloadFacebookApp: function () {
         this.log("Launching app catalog to download facebook");
@@ -305,6 +318,33 @@ enyo.kind({
         if (!foundMacaw) {
             this.SHARE_LINK_LIST.some(function (shareService, index) {
                 if (shareService.title === "Project Macaw") {
+                    shareService.exists = false;
+                    shareService.checkExistance = false;
+                    this.$.shareList.renderRow(index);
+                }
+            }, this);
+        }
+
+                foundQuickpost = apps.some(function (app) {
+            this.log(enyo.json.stringify(app));
+            if (app.id === "com.hedami.quickpost") {
+
+
+                this.SHARE_LINK_LIST.some(function (shareService, index) {
+                    if (shareService.title === "Quick Post") {
+                        shareService.exists = true;
+                        shareService.checkExistance = false;
+                        this.$.shareList.renderRow(index);
+                    }
+                }, this);
+                return true;
+            }
+        }, this);
+
+
+        if (!foundQuickpost) {
+            this.SHARE_LINK_LIST.some(function (shareService, index) {
+                if (shareService.title === "Quick Post") {
                     shareService.exists = false;
                     shareService.checkExistance = false;
                     this.$.shareList.renderRow(index);
